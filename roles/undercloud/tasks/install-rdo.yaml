@@ -8,3 +8,9 @@
           - vim
           - python-tripleoclient
             
+- name: Install overcloud images (OSP8 only)
+  yum: name={{ item }} state=present
+  with_items:
+          - rhosp-director-images 
+          - rhosp-director-images-ipa
+  when: osp_version != "osp7"
