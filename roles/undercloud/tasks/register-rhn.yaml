@@ -10,6 +10,7 @@
 - name: Check what pools system is already attached to
   command: /usr/bin/subscription-manager list --consumed --pool-only 
   register: subscription_pools
+  changed_when: False
 
 - name: Attach system to the pool
   command: /usr/bin/subscription-manager attach --pool={{ rhn['pool'] }} 

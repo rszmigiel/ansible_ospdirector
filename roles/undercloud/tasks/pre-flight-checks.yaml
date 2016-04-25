@@ -1,0 +1,8 @@
+- shell: grep '^nameserver' /etc/resolv.conf
+  register: grep_resolv
+  ignore_errors: true
+  changed_when: False
+
+- fail: msg="Please ensure that nameserver is properly configured for this node."
+  when: "'nameserver' not in grep_resolv.stdout"
+
