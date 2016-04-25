@@ -1,5 +1,11 @@
 [DEFAULT]
 {% for key, value in undercloud_config.iteritems() %}
+{% if osp_version == "osp7" and key == "inspection_iprange" %}
+discovery_iprange = {{ value }}
+{% elif osp_version == "osp8" and key == "discovery_iprange" %}
+inspection_iprange = {{ value }}
+{% else %}
 {{ key }} = {{ value }}
+{% endif %}
 {% endfor %}
 
