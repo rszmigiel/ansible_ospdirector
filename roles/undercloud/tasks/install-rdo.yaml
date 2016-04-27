@@ -1,11 +1,19 @@
 - name: Install director packages
   yum: name=python-rdomanager-oscplugin state=present
+  register: result
+  until: '"failed" not in result'
+  retries: 5
+  delay: 10
 
 - name: Install some extra packages...
   yum: name={{ item }} state=present
   with_items:
           - screen
           - vim
+  register: result
+  until: '"failed" not in result'
+  retries: 5
+  delay: 10
             
 - name: Install overcloud images (OSP8 only)
   yum: name={{ item }} state=present
@@ -14,3 +22,7 @@
           - rhosp-director-images 
           - rhosp-director-images-ipa
   when: osp_version != "osp7"
+  register: result
+  until: '"failed" not in result'
+  retries: 5
+  delay: 10

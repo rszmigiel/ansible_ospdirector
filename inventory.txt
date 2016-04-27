@@ -1,4 +1,4 @@
 [undercloud]
-10.0.0.10 ansible_user=root
+10.0.0.11 ansible_user=root
 
 

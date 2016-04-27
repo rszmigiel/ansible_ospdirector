@@ -1,3 +1,6 @@
 - name: Updating the system...
   yum: name=* state=latest update_cache=yes
   register: update_result
+  until: '"failed" not in update_result'
+  retries: 5
+  delay: 10

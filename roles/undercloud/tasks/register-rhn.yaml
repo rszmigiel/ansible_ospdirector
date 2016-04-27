@@ -5,8 +5,6 @@
                        pool={{ rhn['pool'] }}
                        autosubscribe=true
 
-# FIXME: We need a way to quickly check if system is already registered
-
 #- name: Attach system to the pool
 #  command: /usr/bin/subscription-manager attach --pool={{ rhn['pool'] }} creates=/root/.rhn_{{ rhn['pool'] }}.attached
 #  register: result
@@ -23,4 +21,3 @@
 #- name: Create semaphore for pool registration
 #  file: path=/root/.rhn_{{ rhn['pool'] }}.attached state=touch
 #  when: result.changed == True
-
