@@ -11,4 +11,4 @@
 - include: install-rdo.yaml
 - include: bootif-fix.yaml
 - include: undercloud-config.yaml
-
+- include: undercloud-install.yaml

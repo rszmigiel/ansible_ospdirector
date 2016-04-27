@@ -1,0 +1,5 @@
+- name: Install undercloud
+  command: openstack undercloud install
+  become: yes
+  become_user: stack
+  when: run_undercloud_install
