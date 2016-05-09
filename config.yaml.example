@@ -18,7 +18,7 @@ undercloud_config:
   masquerade_network: 192.168.111.0/24
   dhcp_start: 192.168.111.200
   dhcp_end: 192.168.111.250
-  introspection_iprange: 192.168.111.10,192.168.111.20
+  inspection_iprange: 192.168.111.10,192.168.111.20
   undercloud_debug: True
 
 
