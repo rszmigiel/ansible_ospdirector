@@ -1,0 +1,24 @@
+- name: create ssl dir
+  file: path=/home/stack/ssl owner=stack group=stack state=directory
+  when: enable_ssl
+
+- name: copy openssl.cnf to /home/stack/ssl
+  template: src=./roles/undercloud/templates/openssl.cnf dest=/home/stack/ssl/openssl.cnf owner=stack group=stack mode=0644
+  when: enable_ssl
+
+- name: create key, cert and undercloud.pem for undercloud_service_certificate. Add cert to list of trusted CAs
+  shell: |
+     cd ssl
+     openssl genrsa -out server-key.pem 2048
+     openssl req -new -x509 -key server-key.pem -out server-cert.pem -days 3650 -config /home/stack/ssl/openssl.cnf -subj "/C=GB/L=London/O=Red Hat"
+     cat server-cert.pem server-key.pem > undercloud.pem
+     sudo mkdir -p /etc/pki/instack-certs
+     sudo cp undercloud.pem /etc/pki/instack-certs/.
+     sudo semanage fcontext -a -t etc_t "/etc/pki/instack-certs(/.*)?"
+     sudo restorecon -R /etc/pki/instack-certs
+     sudo cp server-cert.pem /etc/pki/ca-trust/source/anchors/
+     sudo update-ca-trust extract
+  become: yes
+  become_user: stack
+  when: enable_ssl
+
