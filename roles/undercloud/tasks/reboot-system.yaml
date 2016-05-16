@@ -7,6 +7,6 @@
   register: was_rebooted
 
 - name: Waiting for server to come back...
-  local_action: wait_for host={{ inventory_hostname }} port=22 state=started
+  local_action: wait_for host={{ inventory_hostname }} port=22 state=started search_regex=OpenSSH delay=10 timeout=300
   when: update_result.changed != false
 
