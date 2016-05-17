@@ -10,5 +10,6 @@
 - include: reboot-system.yaml
 - include: install-rdo.yaml
 - include: bootif-fix.yaml
+- include: undercloud-config-ssl.yaml
 - include: undercloud-config.yaml
 - include: undercloud-install.yaml

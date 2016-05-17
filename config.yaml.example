@@ -7,6 +7,7 @@ rhn:
 osp_version: osp8 # osp7, osp8...
 director_hostname: director.osp8.rh
 run_undercloud_install: true
+enable_ssl: true
 
 undercloud_config:
   local_ip: 192.168.111.1/24
