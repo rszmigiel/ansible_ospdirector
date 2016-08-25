@@ -37,6 +37,7 @@ repos_to_enable:
     - rhel-7-server-openstack-8-rpms
     - rhel-7-server-openstack-8-director-rpms
     - rhel-7-server-rh-common-rpms
+
   osp9:
     - rhel-7-server-rpms
     - rhel-7-server-extras-rpms
