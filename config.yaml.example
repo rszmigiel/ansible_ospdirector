@@ -4,7 +4,7 @@ rhn:
   activationkey:
   pool: Employee SKU
 
-osp_version: osp8 # osp7, osp8...
+osp_version: osp8 # osp7, osp8, osp9...
 director_hostname: director.osp8.rh
 run_undercloud_install: true
 enable_ssl: true
@@ -36,5 +36,12 @@ repos_to_enable:
     - rhel-7-server-extras-rpms
     - rhel-7-server-openstack-8-rpms
     - rhel-7-server-openstack-8-director-rpms
+    - rhel-7-server-rh-common-rpms
+
+  osp9:
+    - rhel-7-server-rpms
+    - rhel-7-server-extras-rpms
+    - rhel-7-server-openstack-9-rpms
+    - rhel-7-server-openstack-9-director-rpms
     - rhel-7-server-rh-common-rpms
 

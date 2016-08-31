@@ -2,7 +2,7 @@
 {% for key, value in undercloud_config.iteritems() %}
 {% if osp_version == "osp7" and key == "inspection_iprange" %}
 discovery_iprange = {{ value }}
-{% elif osp_version == "osp8" and key == "discovery_iprange" %}
+{% elif osp_version != "osp7" and key == "discovery_iprange" %}
 inspection_iprange = {{ value }}
 {% elif enable_ssl and key == "undercloud_service_certificate" %}
 undercloud_service_certificate = /etc/pki/instack-certs/undercloud.pem
