@@ -1,0 +1,79 @@
+- name: Enable the HAProxy plug-in
+  ini_file: dest=/etc/neutron/neutron_lbaas.conf
+            section=service_providers
+            option=service_provider
+            value="LOADBALANCER:Haproxy:neutron_lbaas.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default"
+            state=present
+            backup=yes
+  notify:
+    - restart neutron-server
+
+- name: Get a list of currently set service_plugins
+  shell: "grep -E '^service_plugins' /etc/neutron/neutron.conf | tail -n 1 | cut -d= -f2 | tr -d '[[:space:]]'"
+  register: curr_service_plugins
+  changed_when: False
+
+
+- name: Enable the LBaaS plugin
+  ini_file: dest=/etc/neutron/neutron.conf
+            section=DEFAULT
+            option=service_plugins
+            value="{{ curr_service_plugins.stdout }},lbaas"
+            state=present
+            backup=yes
+  when: "'lbaas' not in curr_service_plugins.stdout"
+  notify:
+    - restart neutron-server
+
+- name: Enable neutron-lbaas-agent (v1)
+  service: name=neutron-lbaas-agent.service enabled=yes
+  notify:
+    - restart neutron-lbaas-agent
+
+
+- name: Enable LBaaS in dashboard configuration file
+  lineinfile: "dest=/etc/openstack-dashboard/local_settings
+              regexp='(^[^#]+)\'enable_lb\': False,'
+              line='\\1\'enable_lb\': True,'
+              backrefs=yes
+              backup=yes"
+  notify:
+    - restart httpd
+
+- name: Enable the HAProxy load balancer
+  ini_file: dest=/etc/neutron/lbaas_agent.ini
+            section=DEFAULT
+            option=device_driver
+            value="neutron.services.loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver"
+            state=present
+            backup=yes
+  notify:
+    - restart neutron-lbaas-agent
+
+
+
+- name: Configure the user_group option
+  ini_file: dest=/etc/neutron/lbaas_agent.ini
+            section=haproxy
+            option=user_group
+            value="haproxy"
+            state=present
+            backup=yes
+  notify:
+    - restart neutron-lbaas-agent
+
+
+
+- name: Select the required driver
+  ini_file: dest=/etc/neutron/lbaas_agent.ini
+            section=DEFAULT
+            option=interface_driver
+            value="neutron.agent.linux.interface.OVSInterfaceDriver"
+            state=present
+            backup=yes
+  notify:
+    - restart neutron-lbaas-agent
+
+
+
+

@@ -1,11 +1,11 @@
 - include_vars: ../../../config.yaml
 - include: pre-flight-checks.yaml
 - include: set-hostname.yaml
-- include: register-rhn.yaml
+### - include: register-rhn.yaml
 - include: create-stack-user.yaml 
 - include: create-dirs.yaml
 - include: modify-hosts.yaml
-- include: update-repos.yaml
+### - include: update-repos.yaml
 - include: update-system.yaml
 - include: reboot-system.yaml
 - include: install-rdo.yaml

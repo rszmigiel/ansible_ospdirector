@@ -1,0 +1,7 @@
+- name: Register system with RHN
+  redhat_subscription: state=present
+                       username={{ rhn['username'] }}
+                       password={{ rhn['password'] }}
+                       pool={{ rhn['pool'] }}
+                       autosubscribe=true
+

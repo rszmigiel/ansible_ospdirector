@@ -1,0 +1,6 @@
+- include: lbaasv1.yaml
+  when: lbaasv1|default(false)|bool == true
+
+- include: fwaas.yaml
+  when: fwaas|default(false)|bool == true
+

@@ -1,0 +1,8 @@
+- include_vars: ../../config.yaml
+
+- include: register-rhn.yaml
+  when: rhnreg|default(false)|bool == true
+
+- include: update-repos.yaml
+  when: rhnreg|default(false)|bool == true
+
