@@ -1,0 +1,51 @@
+- name: Install packages required for FWaaS
+  yum: name={{ item }} state=present
+  with_items:
+    - openstack-neutron-fwaas
+    - python-neutron-fwaas
+  register: result
+  until: '"failed" not in result'
+  retries: 5
+  delay: 10
+
+- name: Get a list of currently set service_plugins
+  shell: "grep -E '^service_plugins' /etc/neutron/neutron.conf | tail -n 1 | cut -d= -f2 | tr -d '[[:space:]]'"
+  register: curr_service_plugins
+  changed_when: False
+
+- name: Enable the FWaaS plugin
+  ini_file: dest=/etc/neutron/neutron.conf
+            section=DEFAULT
+            option=service_plugins
+            value="{{ curr_service_plugins.stdout }},neutron.services.firewall.fwaas_plugin.FirewallPlugin"
+            state=present
+            backup=yes
+  when: "'neutron.services.firewall.fwaas_plugin.FirewallPlugin' not in curr_service_plugins.stdout"
+  notify:
+    - restart neutron-server
+
+- name:  Configure FWaaS
+  ini_file: dest=/etc/neutron/fwaas_driver.ini
+            section={{ item.section }}
+            option={{ item.option }}
+            value={{ item.value }}
+            state=present
+            backup=yes
+  with_items:
+    - { section: 'fwaas', option: 'driver', value: 'neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver'}
+    - { section: 'fwaas', option: 'enabled', value: 'True'}
+    - { section: 'service_providers', option: 'service_provider', value: 'LOADBALANCER:Haproxy:neutron_lbaas.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default'}
+  notify:
+    - restart neutron-server
+
+- name: Enable FWaaS in dashboard configuration file
+  lineinfile: "dest=/etc/openstack-dashboard/local_settings
+              regexp='(^[^#]+)\'enable_firewall\': False,'
+              line='\\1\'enable_firewall\': True,'
+              backrefs=yes
+              backup=yes"
+  notify:
+    - restart httpd
+
+
+
