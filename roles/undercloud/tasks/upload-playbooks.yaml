@@ -1,0 +1,5 @@
+- name: Upload ansible playbook to undercloud node
+  copy: src={{playbook_dir}}
+        dest=/home/stack/
+        backup=yes
+

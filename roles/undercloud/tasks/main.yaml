@@ -13,3 +13,8 @@
 - include: undercloud-config-ssl.yaml
 - include: undercloud-config.yaml
 - include: undercloud-install.yaml
+- include: install-ansible.yaml
+  when: go-ansible|default(false)|bool == true
+- include: upload-playbooks.yaml
+  when: go-ansible|default(false)|bool == true
+

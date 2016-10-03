@@ -1,0 +1,13 @@
+- name: Add EPEL repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: http://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    enabled: no
+
+- name: Install Ansible
+  yum: 
+    name: ansible
+    state: present
+    enablerepo: epel
+
