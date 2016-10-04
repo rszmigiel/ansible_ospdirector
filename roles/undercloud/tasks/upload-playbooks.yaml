@@ -1,0 +1,4 @@
+- name: Upload ansible playbook to undercloud node
+  synchronize: src={{playbook_dir}}
+               dest=/home/stack/
+
