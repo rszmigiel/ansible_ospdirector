@@ -1,6 +1,7 @@
 - include_vars: ../../../config.yaml
 - include: pre-flight-checks.yaml
 - include: set-hostname.yaml
+- include: add-ssh-key-to-root.yaml
 ### - include: register-rhn.yaml
 - include: create-stack-user.yaml 
 - include: create-dirs.yaml
@@ -10,6 +11,7 @@
 - include: reboot-system.yaml
 - include: install-rdo.yaml
 - include: bootif-fix.yaml
+  when: bootifFix|default(false)|bool == true
 - include: undercloud-config-ssl.yaml
 - include: undercloud-config.yaml
 - include: undercloud-install.yaml
