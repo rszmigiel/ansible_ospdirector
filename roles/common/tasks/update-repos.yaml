@@ -1,5 +1,5 @@
 - name: Disable all repos
-  command: subscription-manager repos --disable=* creates=/home/stack/.repos-disabled-enabled
+  command: subscription-manager repos --disable=* creates=/tmp/.repos-disabled-enabled
   register: disable_repo_result
 
 - set_fact:
@@ -12,11 +12,11 @@
             {%- endfor %}
 
 - name: Enable required repos
-  command: subscription-manager repos {{ rhsm_enable_repos }} creates=/home/stack/.repos-disabled-enabled
+  command: subscription-manager repos {{ rhsm_enable_repos }} creates=/tmp/.repos-disabled-enabled
   register: enable_repo_result
 
 
 - name: Create a semaphore for repos disable/enable
-  file: dest=/home/heat-admin/.repos-disabled-enabled owner=heat-admin group=heat-admin state=touch
+  file: dest=/tmp/.repos-disabled-enabled state=touch
   when: disable_repo_result.rc == 0 and enable_repo_result.rc == 0
 
