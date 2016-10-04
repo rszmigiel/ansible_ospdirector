@@ -2,7 +2,7 @@ Two playbooks (and one configuration file) to rule them all ;-)
 
 # deploy-undercloud.yaml
 This playbook deploys and configures undercloud node. Please check _config.yaml.example_ file for available configuration options.
-If you want to install Ansible and upload these playbooks to the undercloud note automagically, please set _goAnsible_ run variable to true.
+If you want to install Ansible and upload these playbooks to the undercloud node automagically, please set _goAnsible_ run variable to true.
 
 ### Example:
 ```bash
