@@ -1,4 +1,4 @@
-#Two playbooks (and one configuration file) to rule them all ;-)
+# Two playbooks (and one configuration file) to rule them all ;-)
 
 ## deploy-undercloud.yaml
 This playbook deploys and configures undercloud node. Please check _config.yaml.example_ file for available configuration options
