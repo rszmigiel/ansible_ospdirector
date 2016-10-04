@@ -1,15 +1,17 @@
-Two playbooks (and one configuration file) to rule them all ;-)
+#Two playbooks (and one configuration file) to rule them all ;-)
 
-# deploy-undercloud.yaml
-This playbook deploys and configures undercloud node. Please check _config.yaml.example_ file for available configuration options.
+## deploy-undercloud.yaml
+This playbook deploys and configures undercloud node. Please check _config.yaml.example_ file for available configuration options
+.
 If you want to install Ansible and upload these playbooks to the undercloud node automagically, please set _goAnsible_ run variable to true.
+If you run fully virtual environment, bootif-fix may be needed. Please set _bootifFix_ run variable to true to enable it.
 
 ### Example:
 ```bash
-ansible-playbook -i inventory/undercloud deploy-undercloud.yaml -e "goAnsible=true"
+ansible-playbook -i inventory/undercloud deploy-undercloud.yaml -e "goAnsible=true bootifFix=true"
 ```
 
-# configure-overcloud.yaml
+## configure-overcloud.yaml
 This playbook configures additional services on the overcloud nodes.
 By default it doesn't register overcloud nodes with RHN. Therefore services which need extra packages installed won't work:
 1. FWaaS requires
@@ -17,7 +19,7 @@ By default it doesn't register overcloud nodes with RHN. Therefore services whic
   * python-neutron-fwaas
  
 
-## Currently the following services can be configured with configure-overcloud.yaml playbook:
+### Currently the following services can be configured with configure-overcloud.yaml playbook:
 
 1. LBaaSv1
 Needs _lbaasv1_ run variable set to true.
