@@ -20,10 +20,10 @@ By default it doesn't register overcloud nodes with RHN. Therefore services whic
 ## Currently the following services can be configured with configure-overcloud.yaml playbook:
 
 1. LBaaSv1
-Needs lbaasv1 run variable set to true.
+Needs _lbaasv1_ run variable set to true.
 
 2. FWaaS
-Needs fwaas run variable set to true.
+Needs _fwaas_ run variable set to true.
 
 ### Example:
 ```bash
