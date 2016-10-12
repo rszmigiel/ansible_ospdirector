@@ -1,0 +1,24 @@
+[ceph]
+192.168.111.213
+192.168.111.212
+192.168.111.214
+
+[compute]
+192.168.111.216
+192.168.111.215
+192.168.111.217
+
+[control]
+192.168.111.218
+192.168.111.219
+192.168.111.220
+
+[all_nodes:children]
+control
+ceph
+compute
+
+
+[all_nodes:vars]
+ansible_ssh_user = heat-admin
+
